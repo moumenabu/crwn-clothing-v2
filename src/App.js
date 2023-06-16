@@ -1,14 +1,23 @@
-import {useState} from 'react';
-import categoriesObj from './categories.json';
-import Menu from './components/category-menu/Menu'
+import { Routes, Route } from 'react-router-dom';
 
-function App() {
-    const [categories, setCategories] = useState(categoriesObj);
-    const callToAction = 'Shop Now';
+import Nav from './components/routes/navigation/Nav';
+import Home from './components/routes/Home';
+import SignIn from './components/routes/SignIn';
 
+function Shop(){
+    return <h1>I am Teh Shop :P</h1>
+}
 
-    return(
-        <Menu categories={categories} c2a={callToAction} />
+function App(){
+    return (
+        <Routes>
+            <Route path='/' element={<Nav />} >
+                <Route index element={<Home />} />
+                <Route path='/shop' element={<Shop />}>
+                </Route>
+                <Route path='/sign-in' element={<SignIn />}></Route>
+            </Route>
+        </Routes>
     )
 }
 
