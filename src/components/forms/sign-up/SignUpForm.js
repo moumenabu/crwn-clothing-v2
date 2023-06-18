@@ -3,6 +3,7 @@ import { createUserViaEmailPassword, createUserDocFromAuth } from "../../utils/f
 import FormInput from "../form-inputs/FormInput";
 
 import './SignUpForm.scss';
+import Button from '../../buttons/Button.js';
 
 function SignUpForm() {
 
@@ -54,7 +55,7 @@ function SignUpForm() {
                 <FormInput label='Email' type="email" name='email' value={email} onChange={changeHandler} required/>
                 <FormInput label='Password' type="password" name='password' value={password} onChange={changeHandler} required/>
                 <FormInput label='Confirm password' type="password" name='confirmPassword' value={confirmPassword} onChange={changeHandler} required/>
-                <button type="submit">Submit</button>                
+                <Button type="submit" buttonStyle=''>Submit</Button>                
             </form>
         </div>
     )

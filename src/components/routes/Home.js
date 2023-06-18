@@ -1,7 +1,7 @@
 import {useState} from 'react';
 
-import categoriesObj from '../../categories.json';
-import Menu from '../category-menu/Menu'
+import categoriesObj from '../product-categories/categories.json';
+import Menu from '../product-categories/category-menu/Menu'
 
 function Home() {
     const [categories, setCategories] = useState(categoriesObj);
