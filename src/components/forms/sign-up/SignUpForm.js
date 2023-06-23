@@ -48,7 +48,7 @@ function SignUpForm() {
 
     return (
         <div className="sign-up-container">
-            <h2>Don't have an account?</h2>
+            <h2>I do not have an account?</h2>
             <span>Sign in with your email and password:</span>
             <form onSubmit={formSubmitHandler}>
                 <FormInput label='Display Name' type="text" name='displayName' value={displayName} onChange={changeHandler} required/>
