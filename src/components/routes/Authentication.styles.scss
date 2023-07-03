@@ -1,0 +1,19 @@
+.centering-container {
+    height: calc(100vh - 91px);
+    position: relative;
+
+    .authentication-container {
+        position: absolute;
+        top: 15%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: calc(512px + 256px + 128px + 64px);
+        height: 515px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+

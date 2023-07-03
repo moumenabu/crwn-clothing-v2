@@ -12,7 +12,7 @@ function Nav({clickHandler}){
                 </Link>
                 <div className='nav-links-container'>
                     <Link to='/shop'>Shop</Link>
-                    <Link to='/sign-in'>Sign in</Link>
+                    <Link to='/authentication'>Sign in</Link>
                 </div>
             </nav>
             <Outlet />

@@ -4,6 +4,8 @@ import {
     signInWithPopup, //provide functionality of popup behaviour of the sign in component - can take 3rd party auth providers
     signInWithRedirect,
     getRedirectResult,
+    signInWithEmailAndPassword,
+    signOut,
     createUserWithEmailAndPassword,
     GoogleAuthProvider, //creates an instance of the auth object to interact with the google auth api - available for many other providers as well
  } from 'firebase/auth';
@@ -57,6 +59,19 @@ export const createUserViaEmailPassword = async (email, password) => {
 //thus we execute the method below on mount to get the lost access token from firebase, if it exists, to continue the operation.
 export const getRedirectResultHandler = ()=> getRedirectResult(auth); 
 //--------------------------------------------------------------------
+
+
+export const manualUserSignIn = async (email, password) => {
+    if (!email || !password) {
+        alert('Please fill in all required fields');
+        return;
+    }
+
+    await signInWithEmailAndPassword(auth, email, password)
+}
+
+
+export const manualUserSignOut = async() => await signOut(auth);
 
 
 //below, creating the firestore database instance and using it to check for new users (users who's docs have no data) and adding thier data to the database via setDoc()

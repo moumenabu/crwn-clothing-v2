@@ -29,9 +29,9 @@ function GoogleSignIn(){
     }, [])
 
     return(
-        <div>
-            <Button buttonStyle='google' onClick={signInViaGooglePopup}>Sign in with Google popup</Button>
-            <Button buttonStyle='google' onClick={googleSignInRedirect}>Sign in with Google redirect</Button> 
+        <div className="">
+            <Button buttonStyle='google' onClick={signInViaGooglePopup}>Google Sign in</Button>
+            <Button buttonStyle='google' onClick={googleSignInRedirect}>Google Sign in (redirect)</Button> 
             {/* googleSignInRedirect used directly as acquiring the access token must be handled by getRedirectResulst() in useEffect, thus independently - it is not an async func as it takes us to another website*/}
         </div>
     )

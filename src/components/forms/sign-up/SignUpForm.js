@@ -15,7 +15,7 @@ function SignUpForm() {
     }
     
     const [formData, setFormData] = useState(formDataObj);
-    const {displayName, email, password, confirmPassword} = formData;
+    const {displayName, email, password, confirmPassword} = formData;       //for more concise code we can extract tha values from the object
 
     function resetFormData (){ 
         setFormData(formDataObj) 
@@ -31,7 +31,7 @@ function SignUpForm() {
 
         try{
             const {user} = await createUserViaEmailPassword(email, password);
-            await createUserDocFromAuth(user, {displayName}); //optional displayName added unlike google provider which supplies the displayName of the user account by default in access token
+            await createUserDocFromAuth(user, {displayName});       //optional displayName added unlike google provider which supplies the displayName of the user account by default in access token
             resetFormData();
         } catch(error) {
             console.log(error);
