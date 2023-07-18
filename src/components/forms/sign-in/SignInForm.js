@@ -1,10 +1,14 @@
 import { useState} from "react";
-import { manualUserSignIn, manualUserSignOut } from "../../utils/firebase/firebase";
+import { manualUserSignIn } from "../../utils/firebase/firebase";
+//import { useContext } from "react";
+//import { getAuth } from "firebase/auth";
 
 import FormInput from "../form-inputs/FormInput";
 import GoogleSignIn from "./GoogleSignIn";
 import Button from "../../buttons/Button";
-
+/* import { UserContext } from "../../contexts/UserContext";
+import { setDisplayName } from '../../utils/firebase/firebase';
+ */
 
 function SignInForm(){
 
@@ -14,6 +18,8 @@ function SignInForm(){
     };
 
     const [formData, setformData] = useState(formDataObj);
+
+    //const LoggedInUser = useContext(UserContext);
 
     function formChangeHandler(event) {
         const {name, value} = event.target;
@@ -28,27 +34,21 @@ function SignInForm(){
         event.preventDefault();
 
         try {
-            const {user} = await manualUserSignIn(formData.email, formData.password)
+            const {user} = await manualUserSignIn(formData.email, formData.password);
+           /*  if (user) {
+                //set user state with firebase user object (after adding the displayName)
+                LoggedInUser.setUserState(await setDisplayName(user));
+            } */
             resetformData();
         } catch(error) {
             if(error.code === 'auth/user-not-found') {
                 alert('Wrong Email');
             } else {
-                alert('Wrong Password');
+                console.log(error.code);
             }
         }
     }
 
-    async function signOutHandler(event) {
-        event.preventDefault();
-
-        try {
-            const reply = await manualUserSignOut()
-            console.log(reply);
-        } catch(error) {
-            console.log(error.code);
-        }
-    }
 
     return (
         <div className="sign-up-container">
@@ -59,7 +59,6 @@ function SignInForm(){
                 <FormInput label='Password' type='password' name='password' value={formData.password} onChange={formChangeHandler} required/>
                 <div className="buttons-container">
                     <Button type='submit' buttonStyle=''>Sign In</Button>
-                    <Button buttonStyle='inverted' onClick={signOutHandler}>Sign Out</Button>
                 </div>
             </form>
             <GoogleSignIn />

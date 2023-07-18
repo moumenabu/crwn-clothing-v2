@@ -5,9 +5,9 @@ function Button({children, buttonStyle, ...otherProps}) {
         google: 'google-sign-in',
         inverted: 'inverted'
     }
-
+    
     return (
-        <button className={`button-container ${buttonStyles[buttonStyle]}`} {...otherProps}>{children}</button>
+        <button className={`button-container ${buttonStyles[buttonStyle]}`} {...otherProps} >{children}</button>
     )
 }
 

@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { createUserViaEmailPassword, createUserDocFromAuth } from "../../utils/firebase/firebase";
 import FormInput from "../form-inputs/FormInput";
+//import { useContext } from "react";
 
 import './SignUpForm.scss';
 import Button from '../../buttons/Button.js';
+//import { UserContext } from "../../contexts/UserContext";
 
 function SignUpForm() {
 
@@ -16,6 +18,8 @@ function SignUpForm() {
     
     const [formData, setFormData] = useState(formDataObj);
     const {displayName, email, password, confirmPassword} = formData;       //for more concise code we can extract tha values from the object
+
+    //const LoggedInUser = useContext(UserContext);
 
     function resetFormData (){ 
         setFormData(formDataObj) 
@@ -30,17 +34,17 @@ function SignUpForm() {
         }
 
         try{
-            const {user} = await createUserViaEmailPassword(email, password);
-            await createUserDocFromAuth(user, {displayName});       //optional displayName added unlike google provider which supplies the displayName of the user account by default in access token
+            const {user} = await createUserViaEmailPassword(email, password);      //optional displayName added unlike google provider which supplies the displayName of the user account by default in access token
             resetFormData();
+            //if (user) LoggedInUser.setUserState(user);
         } catch(error) {
             console.log(error);
             if(error.code === 'auth/email-already-in-use'){
-                alert('Account with this email already exists :/');
+                alert('Account with this email already exists');
             }
         }
     }
-
+    
     function changeHandler(event){
         const {name, value} = event.target;
         setFormData({...formData, [name]: value})
@@ -52,9 +56,13 @@ function SignUpForm() {
             <span>Sign in with your email and password:</span>
             <form onSubmit={formSubmitHandler}>
                 <FormInput label='Display Name' type="text" name='displayName' value={displayName} onChange={changeHandler} required/>
+
                 <FormInput label='Email' type="email" name='email' value={email} onChange={changeHandler} required/>
+
                 <FormInput label='Password' type="password" name='password' value={password} onChange={changeHandler} required/>
+
                 <FormInput label='Confirm password' type="password" name='confirmPassword' value={confirmPassword} onChange={changeHandler} required/>
+
                 <Button type="submit" buttonStyle=''>Submit</Button>                
             </form>
         </div>

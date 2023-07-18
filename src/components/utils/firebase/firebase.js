@@ -8,6 +8,7 @@ import {
     signOut,
     createUserWithEmailAndPassword,
     GoogleAuthProvider, //creates an instance of the auth object to interact with the google auth api - available for many other providers as well
+    onAuthStateChanged, //stores the logged in user(or lack of) whenever there is a change in authentication state i.e. sign in/out
  } from 'firebase/auth';
 import {
     getFirestore, //instantiates our database instance in our project
@@ -18,7 +19,7 @@ import {
 
 
 
-//confog pbject taken from firebase console - ties the instance we create with the project in the backend using 'initializeApp()'
+//config object taken from firebase console - ties the instance we create with the project in the backend using 'initializeApp()'
 const firebaseConfig = {
 apiKey: "AIzaSyDi_4jtLy4chdwmvxQpyBb_nE9jGYvHv9g",
 authDomain: "crown-clothing-project-75fe1.firebaseapp.com",
@@ -37,7 +38,7 @@ const firebaseApp = initializeApp(firebaseConfig); // instantiates our firebase 
 // ** email/password sign, getdoc, setdoc are async methods 
 
 // instantiate instances of the authentication objects needed - below are firebase and google
-export const auth = getAuth()
+export const auth = getAuth();
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({prompt: 'select_account'});
@@ -67,16 +68,22 @@ export const manualUserSignIn = async (email, password) => {
         return;
     }
 
-    await signInWithEmailAndPassword(auth, email, password)
+    return await signInWithEmailAndPassword(auth, email, password);
 }
 
 
-export const manualUserSignOut = async() => await signOut(auth);
+export const manualUserSignOut = async() => {
+    try {
+        await signOut(auth);
+    } catch(error) {
+        console.log(error.code);
+    }
+}
 
 
 //below, creating the firestore database instance and using it to check for new users (users who's docs have no data) and adding thier data to the database via setDoc()
 //returns the user document at the end (*doc does not contain the data, it's the document info, getDoc/setDoc get/set the data from the database)
-export const database = getFirestore();
+export const database = getFirestore(firebaseApp);
 
 export const createUserDocFromAuth = async (user, additionalInfo={}) => {
     const userDoc = doc(database, 'users', user.uid);
@@ -96,3 +103,22 @@ export const createUserDocFromAuth = async (user, additionalInfo={}) => {
     return userDoc;
 }
 //---------------------------------------------------------------------------------------------
+
+//extracts the display name of the user from their record in firebase, as it is not provided with the authenticatoin token, and returns the user object with it added
+export async function setDisplayName(user) {
+    //get displayName
+    const userDoc = doc(database, 'users', user.uid);
+    const userData = await getDoc(userDoc);
+    const name = userData.get("displayName");
+
+    //return user with displayName
+    return {...user, displayName: name};   
+}
+//--------------------------------------------------------
+
+
+//observer/listener to change in authentication state (sign in/out) and passes the user to the callback - returns unsubsribe function to be used in useEffect
+//auth maintains the user info even after a refresh unless signOut() is explicitly used
+export function authStateChangeHandler(callBack) {
+    onAuthStateChanged(auth, callBack);
+}

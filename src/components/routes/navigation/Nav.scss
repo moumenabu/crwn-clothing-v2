@@ -1,0 +1,32 @@
+.nav-page {
+    .nav-bar {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 24px 0;
+        justify-content: space-between;
+
+        .nav-links-container{
+            display: flex;
+            flex-direction: row;
+            gap: 36px;
+            font-size:x-large;
+            font-weight: bold;
+            align-items: center;   
+                 
+        }
+
+        .dropdown{
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            z-index: 5;
+            display: none;
+        }
+
+        .reveal{
+            display: block;
+        }  
+    }
+}

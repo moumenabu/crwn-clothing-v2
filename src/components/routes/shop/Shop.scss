@@ -1,0 +1,22 @@
+.shop{
+    text-align: center;
+
+    h1{
+        margin: 40px 0px;
+    }
+
+    .product-gallery{
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        row-gap: 32px;
+        column-gap: 40px;
+        
+        //below is the best way to get a gridish style using flexbox but will never be as neat as 'grid'
+        /* margin: 40px 64px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 42px; */
+    }
+}

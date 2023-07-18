@@ -1,5 +1,5 @@
-import SignUpForm from "../forms/sign-up/SignUpForm";
-import SignInForm from "../forms/sign-in/SignInForm";
+import SignUpForm from "../../forms/sign-up/SignUpForm";
+import SignInForm from "../../forms/sign-in/SignInForm";
 
 import './Authentication.styles.scss';
 
@@ -8,8 +8,8 @@ function Authentication(){
         <div className="centering-container">
             <div className="middleman-container">
                 <div className="authentication-container">
-                    <SignInForm></SignInForm>
-                    <SignUpForm></SignUpForm>
+                    <SignInForm />
+                    <SignUpForm />
                 </div>
             </div>
         </div>
